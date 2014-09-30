@@ -2,7 +2,25 @@
 <module type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="android" name="Android">
-      <configuration />
+      <configuration>
+        <option name="RUN_PROGUARD" value="true" />
+        <proGuardCfgFiles>
+          <file>file://%MODULE_SDK_HOME%/tools/proguard/proguard-android.txt</file>
+          <file>file://$MODULE_DIR$/proguard-project.txt</file>
+        </proGuardCfgFiles>
+      </configuration>
+    </facet>
+    <facet type="scala" name="Scala">
+      <configuration>
+        <option name="compilerLibraryLevel" value="Global" />
+        <option name="compilerLibraryName" value="scala-compiler" />
+        <option name="languageLevel" value="Scala 2.11" />
+        <option name="pluginPaths">
+          <array>
+            <option value="D:\Program Files (x86)\scala\misc\scala-devel\plugins\continuations.jar" />
+          </array>
+        </option>
+      </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
@@ -13,6 +31,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 17 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="scala-library" level="project" />
   </component>
 </module>
 
