@@ -1,0 +1,179 @@
+# Copyright (c) 2013 Wes Lanning, http://codingcreation.com
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+# http://www.opensource.org/licenses/mit-license.php
+#
+
+# To enable ProGuard in your project, edit project.properties
+# to define the proguard.config property as described in that file.
+#
+# Add project specific ProGuard rules here.
+# By default, the flags in this file are appended to flags specified
+# in ${sdk.dir}/tools/proguard/proguard-android.txt
+# You can edit the include path and order by changing the ProGuard
+# include property in project.properties.
+#
+# For more details, see
+#   http://developer.android.com/guide/developing/tools/proguard.html
+#
+# Add any project specific keep options here:
+#
+# If your project uses WebView with JS, uncomment the following
+# and specify the fully qualified class name to the JavaScript interface
+# class:
+#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+#   public *;
+#}
+#(org.xml.sax.EntityResolver)Class.forName(variable).newInstance()
+
+# -------- This should work for any project now without modifications just drop it in your project and you're set -------
+
+-dontwarn **$$anonfun$*
+-dontwarn scala.beans.ScalaBeanInfo
+-dontwarn scala.collection.generic.GenTraversableFactory
+-dontwarn scala.collection.immutable.RedBlack$Empty
+-dontwarn scala.concurrent.forkjoin.**
+-dontwarn scala.reflect.**
+-dontwarn scala.sys.process.**
+-dontwarn scala.swing.**
+-dontwarn scala.concurrent.**
+-dontwarn scala.tools.**,plugintemplate.**
+
+-dontnote org.xml.sax.EntityResolver
+
+# fixes an issue with async/await (https://issues.scala-lang.org/browse/SI-5397)
+-keep class scala.collection.SeqLike {
+    public protected *;
+}
+
+#(org.apache.james.mime4j.storage.StorageProvider)Class.forName(variable).newInstance()
+-dontnote org.apache.james.mime4j.storage.DefaultStorageProvider
+
+## Fixes ==> Warning: ... can't find referenced class sun.misc.Unsafe
+-dontwarn sun.misc.Unsafe
+
+-dontobfuscate
+-dontoptimize
+-dontpreverify
+
+-dontskipnonpubliclibraryclasses
+-dontskipnonpubliclibraryclassmembers
+
+#scala.Enumeration accesses a field 'MODULE$' dynamically
+-dontnote scala.Enumeration
+
+#(org.xml.sax.EntityResolver)Class.forName(variable).newInstance()
+-dontnote org.xml.sax.EntityResolver
+
+#(org.apache.james.mime4j.storage.StorageProvider)Class.forName(variable).newInstance()
+-dontnote org.apache.james.mime4j.storage.DefaultStorageProvider
+
+-keepattributes Exceptions,InnerClasses,Signature,Deprecated,
+            SourceFile,LineNumberTable,Annotation,EnclosingMethod
+
+# these should hopefully make any specific changes for a new project no longer needed so you can just drop in the proguard file
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+-keep public class com.android.vending.licensing.ILicensingService
+
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+-keepclasseswithmembernames class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+
+-keepclasseswithmembernames class * {
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+
+## don't let proguard screw around with actionbar sherlock (else you'll get vague errors and blame scala probably)
+-keepclassmembers class * extends com.actionbarsherlock.ActionBarSherlock {
+    <init>(android.app.Activity, int);
+}
+
+# lines below are probably not needed anymore, but if you're ever getting proguard errors, change them to match your packages and paths.
+#-keep class com.example.android_scala**
+#-dontwarn com.example.android_scala**
+#-libraryjars "libs\scala-actors.jar";"libs\scala-library.jar"
+#-dontnote com.example.android_scala.Activity
+
+
+
+
+-dontnote java.lang.reflect.**
+
+
+
+#-keep public class com.android.vending.licensing.ILicensingService
+
+# Keep - Applications. Keep all application classes, along with their 'main'
+# methods.
+-keepclasseswithmembers public class * {
+    public static void main(java.lang.String[]);
+}
+
+
+-keep class com.google.**
+-keep class java.lang.reflect.**
+
+
+
+
+-keepnames class * implements java.io.Serializable
+
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    !static !transient <fields>;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+
+
