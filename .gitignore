@@ -1,0 +1,8 @@
+build
+target
+bin
+gen
+libs
+obj
+out
+proguard_logs
